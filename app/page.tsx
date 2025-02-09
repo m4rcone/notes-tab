@@ -1,10 +1,7 @@
-import ListNotes from "./ui/list-notes";
-
 export default function Page() {
   return (
-    <section className="flex flex-col gap-4 px-4 py-5">
-      <h2 className="text-2xl font-bold text-neutral-950">All notes</h2>
-      <ListNotes />
-    </section>
+    <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+      <h2>Notes Tab soon...</h2>
+    </div>
   );
 }
