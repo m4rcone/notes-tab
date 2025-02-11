@@ -4,14 +4,19 @@ import Link from "next/link";
 import { useState } from "react";
 import DeleteModal from "./delete-modal";
 import ArchiveModal from "./archive-modal";
+import { useRouter } from "next/navigation";
 
 export default function MenuNote() {
   const [isOpenDeleteModel, setIsOpenDeleteModel] = useState(false);
   const [isOpenArchiveModel, setIsOpenArchiveModel] = useState(false);
+  const router = useRouter();
 
   return (
     <nav className="flex justify-between border-b border-b-neutral-300 pb-3 text-sm text-neutral-600">
-      <Link className="flex items-center gap-1" href="/notes">
+      <span
+        className="flex cursor-pointer items-center gap-1"
+        onClick={() => router.back()}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -27,7 +32,7 @@ export default function MenuNote() {
           />
         </svg>
         Go back
-      </Link>
+      </span>
       <div className="flex items-center gap-4">
         <button onClick={() => setIsOpenDeleteModel(true)}>
           <svg

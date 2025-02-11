@@ -46,7 +46,7 @@ export default function SearchInput() {
         <input
           type="text"
           placeholder="Search by title, content, or tags…"
-          defaultValue={searchParams.get("search")?.toString()}
+          defaultValue={searchParams.get("query")?.toString()}
           onChange={(e) => handleSearch(e.target.value)}
           className="w-full rounded-lg border border-neutral-300 bg-neutral-50 py-3 pr-4 pl-11 text-sm text-neutral-950 placeholder:text-sm placeholder:text-neutral-500"
         />

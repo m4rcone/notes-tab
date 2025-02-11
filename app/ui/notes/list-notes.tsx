@@ -7,6 +7,8 @@ export default function ListNotes() {
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
   const query = searchParams.get("query");
+  const tagTagged = searchParams.get("tag");
+
   let filteredNotes = data.notes;
 
   if (filter === "archived") {
@@ -21,6 +23,14 @@ export default function ListNotes() {
         note.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
       );
     });
+  }
+
+  if (tagTagged) {
+    filteredNotes = filteredNotes.filter((note) =>
+      note.tags.some((tag) =>
+        tag.toLowerCase().includes(tagTagged.toLowerCase()),
+      ),
+    );
   }
 
   return (

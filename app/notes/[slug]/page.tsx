@@ -1,11 +1,10 @@
 "use client";
 
-import { useSearchParams, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import data from "../../lib/data.json";
 import { formatDate } from "../../utils/format-date";
 
 export default function Page() {
-  const searchParams = useSearchParams();
   const params = useParams();
 
   return (

@@ -9,7 +9,7 @@ const links = [
     href: "/notes?filter=archived",
     icon: "icon-archive.svg",
   },
-  { name: "Tags", href: "", icon: "icon-tag.svg" },
+  { name: "Tags", href: "/notes?filter=tags", icon: "icon-tag.svg" },
   { name: "Settings", href: "", icon: "icon-settings.svg" },
 ];
 
