@@ -6,10 +6,21 @@ import { useSearchParams } from "next/navigation";
 export default function ListNotes() {
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
+  const query = searchParams.get("query");
   let filteredNotes = data.notes;
 
   if (filter === "archived") {
     filteredNotes = filteredNotes.filter((note) => note.isArchived);
+  }
+
+  if (filter == "search" && query) {
+    filteredNotes = filteredNotes.filter((note) => {
+      return (
+        note.content.toLowerCase().includes(query.toLowerCase()) ||
+        note.title.toLowerCase().includes(query.toLowerCase()) ||
+        note.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+      );
+    });
   }
 
   return (

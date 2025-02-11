@@ -2,6 +2,7 @@
 
 import ListNotes from "../ui/notes/list-notes";
 import { useSearchParams } from "next/navigation";
+import SearchInput from "../ui/notes/search-input";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -14,7 +15,9 @@ export default function Page() {
           {searchParams
             ? searchParams.get("filter") === "archived"
               ? "Alchived Notes"
-              : "All notes"
+              : searchParams.get("filter") === "search"
+                ? "Search"
+                : "All notes"
             : "All notes"}
         </h2>
         {filter === "archived" && (
@@ -23,6 +26,7 @@ export default function Page() {
             them anytime.
           </p>
         )}
+        {filter === "search" && <SearchInput />}
       </div>
       <ListNotes />
     </section>
