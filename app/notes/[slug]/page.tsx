@@ -3,9 +3,38 @@
 import { useParams } from "next/navigation";
 import data from "../../lib/data.json";
 import { formatDate } from "../../utils/format-date";
+import { useEffect, useRef } from "react";
 
 export default function Page() {
   const params = useParams();
+  const textareaTitleRef = useRef(null);
+  const textareaContentRef = useRef(null);
+  const textareaTagsRef = useRef(null);
+
+  useEffect(() => {
+    textareaTitleRef.current.style.height = "auto";
+    textareaTitleRef.current.style.height = `${textareaTitleRef.current.scrollHeight}px`;
+    textareaContentRef.current.style.height = "auto";
+    textareaContentRef.current.style.height = `${textareaContentRef.current.scrollHeight}px`;
+    textareaTagsRef.current.style.height = "auto";
+    textareaTagsRef.current.style.height = `${textareaTagsRef.current.scrollHeight}px`;
+  }, []);
+
+  const handleInputTags = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    let value = e.currentTarget.value;
+
+    // Permite apenas letras (maiúsculas e minúsculas) e vírgulas
+    value = value.replace(/[^a-zA-Z,]/g, "");
+
+    // Adiciona um espaço após cada vírgula, se não houver um já
+    value = value.replace(/,([^ ])/g, ", $1");
+
+    e.currentTarget.value = value;
+
+    // Ajusta a altura do textarea dinamicamente
+    e.currentTarget.style.height = "auto";
+    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+  };
 
   return (
     <div>
@@ -16,9 +45,18 @@ export default function Page() {
 
           return (
             <div className="flex flex-col gap-3" key={note.id}>
-              <h2 className="text-2xl font-bold text-neutral-950">
-                {note.title}
-              </h2>
+              <textarea
+                ref={textareaTitleRef}
+                rows={1}
+                maxLength={50}
+                defaultValue={note.title}
+                placeholder="Enter a title…"
+                onChange={(e) => {
+                  e.currentTarget.style.height = "auto"; // Reseta a altura para evitar acúmulo
+                  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`; // Ajusta a altura conforme o conteúdo
+                }}
+                className="overflow-hidden text-2xl font-bold text-neutral-950 placeholder:text-2xl placeholder:font-bold placeholder:text-neutral-950"
+              ></textarea>
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2 py-1">
                   <span className="flex min-w-[115px] items-center gap-1.5 text-xs text-neutral-700">
@@ -48,9 +86,20 @@ export default function Page() {
                     </svg>
                     Tags
                   </span>
-                  <span className="text-xs text-neutral-950">
+
+                  <textarea
+                    ref={textareaTagsRef}
+                    rows={1}
+                    maxLength={30}
+                    defaultValue={note.tags.join(", ")}
+                    placeholder="Add tags separated by commas (e.g. Work, Planning)"
+                    onChange={(e) => handleInputTags(e)}
+                    className="w-full overflow-hidden text-xs text-neutral-950 placeholder:text-neutral-400"
+                  ></textarea>
+
+                  {/* <span className="text-xs text-neutral-950">
                     {note.tags.join(", ")}
-                  </span>
+                  </span> */}
                 </div>
 
                 {note.isArchived && (
@@ -112,14 +161,17 @@ export default function Page() {
                 </div>
               </div>
               <div className="border-b border-b-neutral-200"></div>
-              <div className="text-sm text-neutral-800">
-                {lines.map((line, index) => (
-                  <p key={index}>
-                    {line}
-                    <br />
-                  </p>
-                ))}
-              </div>
+
+              <textarea
+                ref={textareaContentRef}
+                defaultValue={lines.map((line) => `${line}\n`).join("")}
+                placeholder="Start typing your note here…"
+                onChange={(e) => {
+                  e.currentTarget.style.height = "auto";
+                  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                }}
+                className="overflow-hidden text-sm text-neutral-800 placeholder:text-sm placeholder:text-neutral-800"
+              ></textarea>
             </div>
           );
         }
