@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import Button from "./button";
+import { showSuccessToast } from "../../lib/toast";
 
 export default function ArchiveModal({ isOpen, setIsOpen }) {
   return (
@@ -57,7 +58,13 @@ export default function ArchiveModal({ isOpen, setIsOpen }) {
               <Button variant="secondary" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  showSuccessToast("Note archived.");
+                  setIsOpen(false);
+                }}
+              >
                 Archive Note
               </Button>
             </div>

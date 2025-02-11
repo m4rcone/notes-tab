@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import Button from "./button";
+import { showSuccessToast } from "../../lib/toast";
 
 export default function DeleteModal({ isOpen, setIsOpen }) {
   return (
@@ -50,7 +51,13 @@ export default function DeleteModal({ isOpen, setIsOpen }) {
               <Button variant="secondary" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button variant="danger" onClick={() => setIsOpen(false)}>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  setIsOpen(false);
+                  showSuccessToast("Note deleted.");
+                }}
+              >
                 Delete Note
               </Button>
             </div>

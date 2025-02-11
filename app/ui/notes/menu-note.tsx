@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import DeleteModal from "./delete-modal";
 import ArchiveModal from "./archive-modal";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import { showSuccessToast } from "../../lib/toast";
 
 export default function MenuNote() {
   const [isOpenDeleteModel, setIsOpenDeleteModel] = useState(false);
@@ -84,7 +85,13 @@ export default function MenuNote() {
           isOpen={isOpenArchiveModel}
           setIsOpen={setIsOpenArchiveModel}
         />
-        <button className="text-blue-500">Save Note</button>
+        <button
+          className="text-blue-500"
+          onClick={() => showSuccessToast("Note updated.")}
+        >
+          Save Note
+        </button>
+        <ToastContainer />
       </div>
     </nav>
   );
