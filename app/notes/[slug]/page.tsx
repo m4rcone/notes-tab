@@ -171,7 +171,7 @@ export default function Page() {
                   e.currentTarget.style.height = "auto";
                   e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
                 }}
-                className="overflow-hidden text-sm text-neutral-800 placeholder:text-sm placeholder:text-neutral-800"
+                className="overflow-hidden text-sm text-neutral-800 placeholder:text-xs placeholder:text-neutral-800"
               ></textarea>
             </div>
           );

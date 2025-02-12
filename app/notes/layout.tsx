@@ -13,7 +13,9 @@ export default function RootLayout({
       <main className="mb-14 flex-1">
         <Suspense>{children}</Suspense>
       </main>
-      <MenuBar />
+      <Suspense>
+        <MenuBar />
+      </Suspense>
     </div>
   );
 }
