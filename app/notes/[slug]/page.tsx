@@ -12,12 +12,21 @@ export default function Page() {
   const textareaTagsRef = useRef(null);
 
   useEffect(() => {
-    textareaTitleRef.current.style.height = "auto";
-    textareaTitleRef.current.style.height = `${textareaTitleRef.current.scrollHeight}px`;
-    textareaContentRef.current.style.height = "auto";
-    textareaContentRef.current.style.height = `${textareaContentRef.current.scrollHeight}px`;
-    textareaTagsRef.current.style.height = "auto";
-    textareaTagsRef.current.style.height = `${textareaTagsRef.current.scrollHeight}px`;
+    if (
+      textareaTitleRef.current &&
+      textareaContentRef.current &&
+      textareaTagsRef.current
+    ) {
+      textareaTitleRef.current.style.height = "auto";
+      textareaTitleRef.current.style.height = `${textareaTitleRef.current.scrollHeight}px`;
+      textareaTitleRef.current.style.resize = "none";
+      textareaContentRef.current.style.height = "auto";
+      textareaContentRef.current.style.height = `${textareaContentRef.current.scrollHeight}px`;
+      textareaContentRef.current.style.resize = "none";
+      textareaTagsRef.current.style.height = "auto";
+      textareaTagsRef.current.style.height = `${textareaTagsRef.current.scrollHeight}px`;
+      textareaTagsRef.current.style.resize = "none";
+    }
   }, []);
 
   const handleInputTags = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -30,8 +39,6 @@ export default function Page() {
     value = value.replace(/,([^ ])/g, ", $1");
 
     e.currentTarget.value = value;
-
-    // Ajusta a altura do textarea dinamicamente
     e.currentTarget.style.height = "auto";
     e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
   };
@@ -86,7 +93,6 @@ export default function Page() {
                     </svg>
                     Tags
                   </span>
-
                   <textarea
                     ref={textareaTagsRef}
                     rows={1}
@@ -96,10 +102,6 @@ export default function Page() {
                     onChange={(e) => handleInputTags(e)}
                     className="w-full overflow-hidden text-xs text-neutral-950 placeholder:text-neutral-400"
                   ></textarea>
-
-                  {/* <span className="text-xs text-neutral-950">
-                    {note.tags.join(", ")}
-                  </span> */}
                 </div>
 
                 {note.isArchived && (
@@ -161,7 +163,6 @@ export default function Page() {
                 </div>
               </div>
               <div className="border-b border-b-neutral-200"></div>
-
               <textarea
                 ref={textareaContentRef}
                 defaultValue={lines.map((line) => `${line}\n`).join("")}

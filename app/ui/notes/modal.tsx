@@ -6,8 +6,23 @@ import {
 } from "@headlessui/react";
 import Button from "./button";
 import { showSuccessToast } from "../../lib/toast";
+import { Dispatch, SetStateAction } from "react";
 
-export default function DeleteModal({ isOpen, setIsOpen }) {
+interface ModalProps {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  type: "Delete" | "Archive" | "Restore";
+  description: string;
+  Icon: any;
+}
+
+export default function Modal({
+  isOpen,
+  setIsOpen,
+  type,
+  description,
+  Icon,
+}: ModalProps) {
   return (
     <>
       <Dialog
@@ -20,29 +35,14 @@ export default function DeleteModal({ isOpen, setIsOpen }) {
           <DialogPanel className="max-w-md rounded-xl bg-white p-5">
             <div className="flex items-start gap-4">
               <div className="rounded-lg bg-neutral-100 p-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 25"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="m14.852 3.879.818 1.785h2.64c.811 0 1.47.658 1.47 1.47V8.22c0 .555-.45 1.005-1.006 1.005H5.005C4.45 9.226 4 8.776 4 8.221V7.133c0-.811.658-1.47 1.47-1.47h2.639l.818-1.784c.246-.536.78-.879 1.37-.879h3.185c.59 0 1.125.343 1.37.879ZM18.24 9.3v8.686c0 1.665-1.333 3.014-2.977 3.014H8.517c-1.644 0-2.977-1.349-2.977-3.014V9.301M10.2 12.816v4.509m3.38-4.509v4.509"
-                  />
-                </svg>
+                <Icon />
               </div>
               <div className="flex flex-col gap-1.5">
                 <DialogTitle className="text-base font-semibold text-neutral-950">
-                  Delete Note
+                  {type} Note
                 </DialogTitle>
                 <Description className="text-sm text-neutral-700">
-                  Are you sure you want to permanently delete this note? This
-                  action cannot be undone.
+                  {description}
                 </Description>
               </div>
             </div>
@@ -52,13 +52,15 @@ export default function DeleteModal({ isOpen, setIsOpen }) {
                 Cancel
               </Button>
               <Button
-                variant="danger"
+                variant={type === "Delete" ? "danger" : "primary"}
                 onClick={() => {
                   setIsOpen(false);
-                  showSuccessToast("Note deleted.");
+                  type === "Delete" && showSuccessToast("Note deleted.");
+                  type === "Archive" && showSuccessToast("Note archived.");
+                  type === "Restore" && showSuccessToast("Note restored.");
                 }}
               >
-                Delete Note
+                {type} Note
               </Button>
             </div>
           </DialogPanel>

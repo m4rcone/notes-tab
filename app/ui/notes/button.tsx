@@ -12,7 +12,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={clsx("rounded-lg px-4 py-3 text-sm", {
+      className={clsx("cursor-pointer rounded-lg px-4 py-3 text-sm", {
         "bg-blue-500 text-white": variant === "primary",
         "bg-neutral-100 text-neutral-600": variant === "secondary",
         "bg-red-500 text-white": variant === "danger",
