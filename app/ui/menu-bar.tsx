@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import clsx from "clsx";
-import { usePathname, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import HomeIcon from "../../public/assets/images/icon-home.svg";
 import SearchIcon from "../../public/assets/images/icon-search.svg";
 import ArchiveIcon from "../../public/assets/images/icon-archive.svg";
@@ -24,7 +29,9 @@ const links = [
 export default function MenuBar() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const params = useParams();
   const filter = searchParams.get("filter");
+  const { replace } = useRouter();
 
   return (
     <div className="relative">
@@ -51,9 +58,9 @@ export default function MenuBar() {
         })}
       </nav>
 
-      {pathname !== "/notes/settings" && (
-        <Link
-          href="notes/create"
+      {pathname !== "/notes/settings" && !params.slug && (
+        <button
+          onClick={() => replace("/notes/create")}
           className="fixed right-4 bottom-[76px] rounded-full bg-blue-500 p-2 text-white"
         >
           <svg
@@ -68,7 +75,7 @@ export default function MenuBar() {
               d="M12 5a.75.75 0 0 1 .75.75V11H18a.75.75 0 0 1 0 1.5h-5.25v5.25a.75.75 0 0 1-1.5 0V12.5H6A.75.75 0 0 1 6 11h5.25V5.75A.75.75 0 0 1 12 5Z"
             />
           </svg>
-        </Link>
+        </button>
       )}
     </div>
   );
